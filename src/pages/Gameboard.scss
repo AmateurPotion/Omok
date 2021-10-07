@@ -1,0 +1,19 @@
+div.gameboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    line-height: 0;
+    div.board {
+        text-align: center;
+        div.line {
+            white-space:nowrap;
+            img {
+                background: url("../assets/cell.png");
+                background-size: cover;
+                background-color: sandybrown;
+                padding-top: 0%;
+            }
+        }
+    }
+}

@@ -1,0 +1,39 @@
+div.joinform {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    
+    input.full {
+        margin: 1%;
+        width: 100%;
+    }
+    
+    div.password {
+        margin: 1%;
+        text-align: center;
+        white-space:nowrap;
+        input.password {
+            width: 100%;
+        }
+    }
+    
+    input.start {
+        width: 100%;
+    }
+
+    div.size {
+        text-align: center;
+        white-space:nowrap;
+        input {
+            margin: 1%;
+            width: 50%;
+        }
+    }
+
+    div.joinMode {
+        margin: 1%;
+        white-space:nowrap;
+    }
+}
