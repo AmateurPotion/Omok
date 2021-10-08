@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/Omok/static/css/main.a44a45dd.chunk.css",
-    "main.js": "/Omok/static/js/main.1b3c621a.chunk.js",
-    "main.js.map": "/Omok/static/js/main.1b3c621a.chunk.js.map",
+    "main.js": "/Omok/static/js/main.dd1a9e21.chunk.js",
+    "main.js.map": "/Omok/static/js/main.dd1a9e21.chunk.js.map",
     "runtime-main.js": "/Omok/static/js/runtime-main.a89e0090.js",
     "runtime-main.js.map": "/Omok/static/js/runtime-main.a89e0090.js.map",
     "static/js/2.b37517f6.chunk.js": "/Omok/static/js/2.b37517f6.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.a89e0090.js",
     "static/js/2.b37517f6.chunk.js",
     "static/css/main.a44a45dd.chunk.css",
-    "static/js/main.1b3c621a.chunk.js"
+    "static/js/main.dd1a9e21.chunk.js"
   ]
 }
