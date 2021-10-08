@@ -5,8 +5,8 @@ import { Gameboard, Joinform } from './pages';
 function App() {
   return (
     <>
-      <Route exact path="/" component={Joinform}/>
-      <Route path="/board" component={Gameboard}/>
+      <Route exact path="/Omok/" component={Joinform}/>
+      <Route path="/Omok/board" component={Gameboard}/>
     </>
   );
 }
