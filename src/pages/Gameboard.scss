@@ -3,23 +3,23 @@ div.gameboard {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    line-height: 0;
     div.board {
-        text-align: center;
+        line-height: 0;
         div.line {
-            white-space:nowrap;
+            white-space: nowrap;
             user-select: none;
-            svg {
-                background-size: cover;
-                padding: 0%;
-                margin: 0%;
-            }
         }
     }
 
     div.information {
-        margin-left: 5%;
-        background-color: black;
-        color: aqua;
+        margin-left: 3%;
+        padding: 1.5%;
+        border-radius: 20%;
+        background-color:beige;
+        white-space: nowrap;
+    }
+
+    div.circle {
+        border-radius: 50%;
     }
 }
