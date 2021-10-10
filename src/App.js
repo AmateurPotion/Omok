@@ -1,13 +1,13 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, HashRouter } from 'react-router-dom';
 import { Gameboard, Joinform } from './pages';
 
 function App() {
   return (
-    <>
-      <Route exact path="/Omok/" component={Joinform}/>
-      <Route path="/Omok/board" component={Gameboard}/>
-    </>
+    <HashRouter basename={process.env.PUBLIC_URL}>
+      <Route exact path="/" component={Joinform}/>
+      <Route path="/board" component={Gameboard}/>
+    </HashRouter>
   );
 }
 

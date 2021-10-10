@@ -7,11 +7,15 @@
 
 # testing
 /coverage
+/test
 
 # production
 /build
+/.vscode
 
 # misc
+.map
+.css.map
 .DS_Store
 .env.local
 .env.development.local

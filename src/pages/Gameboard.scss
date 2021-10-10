@@ -8,12 +8,18 @@ div.gameboard {
         text-align: center;
         div.line {
             white-space:nowrap;
-            img {
-                background: url("../assets/cell.png");
+            user-select: none;
+            svg {
                 background-size: cover;
-                background-color: sandybrown;
-                padding-top: 0%;
+                padding: 0%;
+                margin: 0%;
             }
         }
+    }
+
+    div.information {
+        margin-left: 5%;
+        background-color: black;
+        color: aqua;
     }
 }
