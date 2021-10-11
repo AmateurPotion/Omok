@@ -130,9 +130,13 @@ const Gameboard = () => {
     }
 
     function Timer({second = 0, runner, pause = false}) {
+        let m = 0, s = second;
+        for(;s > 60; s -= 60) {
+            m++;
+        }
         return (
             <>
-                개발 예정
+                {(() => m !== 0 ? (<>{m}분</>) : "")()} {s}초 남음
             </>
         );
     }
@@ -144,7 +148,7 @@ const Gameboard = () => {
             <div className="information">
                 <h2 className="title"> 상태창 </h2>
                 게임 진행 상태 : {state.gameCondition} <br/>
-                타이머 : <Timer /> <br/>
+                타이머 : <Timer second={state.hasOwnProperty("timer") ? state.timer : 0} /> <br/>
                 그리드 on/off <Checkbox defaultChecked={true} onChange={(e) => {changeState({...state, gridView: e.target.checked})}}> a</Checkbox>
                 <Button onClick={e => console.log(e.target.ownerDocument)}>항복</Button> 
                 <SpecList/> <br/>

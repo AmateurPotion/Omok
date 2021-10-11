@@ -10,12 +10,14 @@ const Joinform = () => {
     joinMode: "create",
     startText: "방 만들기",
     disableSizeInput: false,
+    disableTimer: true,
     disablePassword: true
   });
 
   // reference sync
   const form = React.createRef();
   const roomName = React.createRef();
+  const timer = React.createRef(), timerable = React.createRef();
   const password = React.createRef(), passwordable = React.createRef();
   const boardWidth = React.createRef(), boardHeight = React.createRef();
 
@@ -37,13 +39,22 @@ const Joinform = () => {
       name: roomName.current.value,
       state: "start",
       joinMode: state.joinMode,
-      password:""
+      timer: 5,
+      password: ""
     };
+    
     if(!state.disablePassword) {
       info["password"] = password.current.value;
     } else {
       delete info.password;
     }
+
+    if(!state.disableTimer) {
+      info["timer"] = timer.current.value;
+    } else {
+      delete info.timer;
+    }
+
     sessionStorage.setItem("game", JSON.stringify(info));
     history.push("/board");
   }
@@ -82,14 +93,26 @@ const Joinform = () => {
           required minLength={3}
         />
         <br/>
-        <div className="password">
+        <div className="timer inputDiv">
+          <input 
+            className="timerable" name="timerable" ref={timerable}
+            onChange={() => {changer({...state, disableTimer: !timerable.current.checked})}}
+            type="checkbox" 
+          />
+          <input
+            className="timer inputSpace" name="timer" ref={timer} disabled={state.disableTimer}
+            type="number" placeholder="타이머" 
+            required min={1}
+          />
+        </div>
+        <div className="password inputDiv">
           <input 
             className="passwordable" name="passwordable" ref={passwordable}
             onChange={() => {changer({...state, disablePassword: !passwordable.current.checked})}}
             type="checkbox" 
           />
           <input
-            className="password" name="password" ref={password} disabled={state.disablePassword}
+            className="password inputSpace" name="password" ref={password} disabled={state.disablePassword}
             type="password" placeholder="방 접속 암호" 
             required minLength={4}
           />
