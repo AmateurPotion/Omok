@@ -23,14 +23,23 @@ const Gameboard = () => {
         // Game loading
         if(state != null) {
             if(state.state === "start") {
-                changeState({
+                const toState = {
                     ...state, 
                     state: "progress",
                     gameCondition: "게임 시작 대기중",
                     gridView: true,
+                    color: state.joinMode === "create" ? "black" : 
+                            state.joinMode === "join" ? "white" : " transparent",
                     status: new Omok(state.boardWidth, state.boardHeight)
-                });
-                localStorage.setItem("cellSize", "32px");
+                };
+                toState.status.winEvents.push(`console.log("win!")`);
+                
+
+
+                changeState(toState);
+                if(localStorage.getItem("cellSize") == null) {
+                    localStorage.setItem("cellSize", "32px");
+                }
             }
         } else {
             alert("올바르지 않은 접근으로 인해 첫 화면으로 이동됩니다.");
@@ -50,15 +59,13 @@ const Gameboard = () => {
         if(!state.status.hasOwnProperty("place")) {
             changeState({...state, status: Omok.loadData(state.status)})
         }
-    } else {
-        console.log("err");
     }
     
     // events
     
     const placeEvent = (e, x, y) => {
-        if(state.status.getColor(x, y) === "none") {
-            changeState({...state, run: state.status.place(x, y, "black")});
+        if(state.status.getColor(x, y) === "transparent") {
+            changeState({...state, run: state.status.place(x, y, state.color)});
             changeState({...state, run: null});
         }
     };
@@ -80,7 +87,6 @@ const Gameboard = () => {
                         {array.map((val, x) => (
                             <svg
                                 alt="cell" key={y * array.length + x}
-                                onClick={(e) => {place(e, x, y); console.log(x + " / " + y)}}
                                 width={cellSize} height={cellSize}
                             >
                                 <rect width={cellSize} height={cellSize} fill="sandybrown"/>
@@ -90,7 +96,12 @@ const Gameboard = () => {
                                 </>: "" )()}
                                 
                                 {/*<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>*/}
-                                <circle cx={cellIntSize / 2} cy={cellIntSize / 2} r={cellIntSize / 3} fill={val} />
+                                <circle
+                                    onClick={(e) => {place(e, x, y);}}
+                                    onMouseOver={e => {if(board.getColor(x, y) === "transparent"){e.target.setAttribute("fill", "gray"); e.target.setAttribute("opacity", "0.8");}}}
+                                    onMouseOut={e => {e.target.setAttribute("fill", val); e.target.setAttribute("opacity", "1");}}
+                                    cx={cellIntSize / 2} cy={cellIntSize / 2} r={cellIntSize / 3} fill={val}
+                                />
                                 {/* 외곽선 */}
                                 {(() => x === 0 || x === array.length - 1 ? 
                                 (<line x1={x === 0 ? 0 : cellIntSize} y1={0} x2={x === 0 ? 0 : cellIntSize} y2={cellIntSize} stroke="black" strokeWidth={cellIntSize / 10} />) : "")()}
