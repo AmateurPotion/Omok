@@ -12,10 +12,10 @@
 # production
 /build
 /.vscode
+*.map
+*.css
 
 # misc
-.map
-.css.map
 .DS_Store
 .env.local
 .env.development.local
