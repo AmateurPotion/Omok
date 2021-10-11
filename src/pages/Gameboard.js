@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import { Omok } from "../game";
 import LioWebRTC from 'liowebrtc';
-import './Gameboard.css';
+import './Gameboard.scss';
 
 //const publish = false; (publish ? "./" : "") + 
 
