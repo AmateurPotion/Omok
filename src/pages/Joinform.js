@@ -36,6 +36,7 @@ const Joinform = () => {
       boardHeight: boardHeight.current.valueAsNumber,
       name: roomName.current.value,
       state: "start",
+      joinMode: state.joinMode,
       password:""
     };
     if(!state.disablePassword) {
@@ -51,19 +52,19 @@ const Joinform = () => {
     changer({...state, joinMode: e.target.id});
     switch (e.target.id) {
       case "create":
-        changer({...state, disableSizeInput: false, startText: "방 만들기"})
+        changer({...state, disableSizeInput: false, startText: "방 만들기", joinMode: "create"})
       return;
 
       case "join":
-        changer({...state, disableSizeInput: true, startText: "게임 참여"});
+        changer({...state, disableSizeInput: true, startText: "게임 참여", joinMode: "join"});
       return;
 
       case "spectate":
-        changer({...state, disableSizeInput: true, startText: "관전하기"});
+        changer({...state, disableSizeInput: true, startText: "관전하기", joinMode: "spectate"});
       return;
 
       case "replay":
-        changer({...state, disableSizeInput: true, startText: "게임 다시보기"});
+        changer({...state, disableSizeInput: true, startText: "게임 다시보기", joinMode: "replay"});
       return;
 
       default:
