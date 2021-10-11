@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import { Button, Checkbox } from '@mui/material';
+import CategoryIcon from '@mui/icons-material/Category';
 import { Omok } from "../game";
 import LioWebRTC from 'liowebrtc';
 import './Gameboard.scss';
@@ -145,11 +146,10 @@ const Gameboard = () => {
                 게임 진행 상태 : {state.gameCondition} <br/>
                 타이머 : <Timer /> <br/>
                 그리드 on/off <Checkbox defaultChecked={true} onChange={(e) => {changeState({...state, gridView: e.target.checked})}}> a</Checkbox>
-                <Button>항복</Button> 
+                <Button onClick={e => console.log(e.target.ownerDocument)}>항복</Button> 
                 <SpecList/> <br/>
             </div>
-            {/* fab M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z*/}
-            <div className="circle fab"><svg><path stroke="black" strokeWidth="10%" d="m12.5,0 l0,25"></path></svg></div>
+            <div className="circle fab"><CategoryIcon/></div>
         </div>
     ) : "";
 }
