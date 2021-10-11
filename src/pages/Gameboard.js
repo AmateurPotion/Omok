@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
 import { Omok } from "../game";
 import LioWebRTC from 'liowebrtc';
 import './Gameboard.css';
@@ -44,14 +46,12 @@ const Gameboard = () => {
     } , [state, changeState, history]);
     
     // Sync
-
-    if(state.status == null) {
-        changeState({...state, status: new Omok(state.boardWidth, state.boardHeight)})
-    } else if(typeof state.status != typeof Omok) {
-        if(!state.status.hasOwnProperty("board")) {
-            let data = Omok.loadData(state.status);
-            changeState({...state, status: data})
+    if(state != null && state.hasOwnProperty("status")) {
+        if(!state.status.hasOwnProperty("place")) {
+            changeState({...state, status: Omok.loadData(state.status)})
         }
+    } else {
+        console.log("err");
     }
     
     // events
@@ -86,6 +86,7 @@ const Gameboard = () => {
                                 <rect width={cellSize} height={cellSize} fill="sandybrown"/>
                                 <line x1={cellIntSize / 2} y1={0} x2={cellIntSize / 2} y2={cellIntSize} stroke="black" strokeWidth={cellIntSize / 10}/>
                                 <line x1={0} y1={cellIntSize / 2} x2={cellIntSize} y2={cellIntSize / 2} stroke="black" strokeWidth={cellIntSize / 10}/>
+                                {/*<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>*/}
                                 <circle cx={cellIntSize / 2} cy={cellIntSize / 2} r={cellIntSize / 3} fill={val} />
                                 {/* 외곽선 */}
                                 {(() => x === 0 || x === array.length - 1 ? 
@@ -121,7 +122,7 @@ const Gameboard = () => {
         );
     }
 
-    return (
+    return state !== null ? (
         <div className="gameboard">
             {(() => state != null ? <Board board={state.status} place={placeEvent}/> : null)()}
             <br/>
@@ -129,17 +130,13 @@ const Gameboard = () => {
                 <h2 className="title"> 상태창 </h2>
                 게임 진행 상태 : {state.gameCondition} <br/>
                 타이머 : <Timer /> <br/>
-                <button>항복</button>
+                <Button>항복</Button>
                 <SpecList/> <br/>
             </div>
-            {/* fab */}
-            <div className="circle" style={{
-                position: "fixed", 
-                backgroundColor: "pink", 
-                right: "3%", bottom: "3%"
-                }}> a</div>
+            {/* fab M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z*/}
+            <div className="circle fab"><svg><path stroke="black" strokeWidth="10%" d="m12.5,0 l0,25-m0,12.5 l25,0"></path></svg></div>
         </div>
-    );
+    ) : "";
 }
 
 export default Gameboard;
