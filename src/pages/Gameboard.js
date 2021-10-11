@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
+import { Button, Checkbox } from '@mui/material';
 import { Omok } from "../game";
 import LioWebRTC from 'liowebrtc';
 import './Gameboard.scss';
@@ -28,6 +27,7 @@ const Gameboard = () => {
                     ...state, 
                     state: "progress",
                     gameCondition: "게임 시작 대기중",
+                    gridView: true,
                     status: new Omok(state.boardWidth, state.boardHeight)
                 });
                 localStorage.setItem("cellSize", "32px");
@@ -84,8 +84,11 @@ const Gameboard = () => {
                                 width={cellSize} height={cellSize}
                             >
                                 <rect width={cellSize} height={cellSize} fill="sandybrown"/>
-                                <line x1={cellIntSize / 2} y1={0} x2={cellIntSize / 2} y2={cellIntSize} stroke="black" strokeWidth={cellIntSize / 10}/>
-                                <line x1={0} y1={cellIntSize / 2} x2={cellIntSize} y2={cellIntSize / 2} stroke="black" strokeWidth={cellIntSize / 10}/>
+                                {(() => state.gridView ? <>
+                                    <line x1={cellIntSize / 2} y1={0} x2={cellIntSize / 2} y2={cellIntSize} stroke="black" strokeWidth={cellIntSize / 10}/>
+                                    <line x1={0} y1={cellIntSize / 2} x2={cellIntSize} y2={cellIntSize / 2} stroke="black" strokeWidth={cellIntSize / 10}/>
+                                </>: "" )()}
+                                
                                 {/*<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>*/}
                                 <circle cx={cellIntSize / 2} cy={cellIntSize / 2} r={cellIntSize / 3} fill={val} />
                                 {/* 외곽선 */}
@@ -130,11 +133,12 @@ const Gameboard = () => {
                 <h2 className="title"> 상태창 </h2>
                 게임 진행 상태 : {state.gameCondition} <br/>
                 타이머 : <Timer /> <br/>
-                <Button>항복</Button>
+                그리드 on/off <Checkbox defaultChecked={true} onChange={(e) => {changeState({...state, gridView: e.target.checked})}}> a</Checkbox>
+                <Button>항복</Button> 
                 <SpecList/> <br/>
             </div>
             {/* fab M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z*/}
-            <div className="circle fab"><svg><path stroke="black" strokeWidth="10%" d="m12.5,0 l0,25-m0,12.5 l25,0"></path></svg></div>
+            <div className="circle fab"><svg><path stroke="black" strokeWidth="10%" d="m12.5,0 l0,25"></path></svg></div>
         </div>
     ) : "";
 }
