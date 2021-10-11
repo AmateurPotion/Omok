@@ -12,7 +12,7 @@ class Omok {
     this.height = height;
     this.winCount = winCount;
     for (let i = 0; i < this.map.length; i++) {
-      this.map[i] = "none";
+      this.map[i] = "transparent";
     }
   }
 
@@ -42,7 +42,7 @@ class Omok {
     if (x + y * this.width < this.map.length) {
       return this.map[x + y * this.width];
     } else {
-      return "none";
+      return "transparent";
     }
   };
 
@@ -62,8 +62,6 @@ class Omok {
     y: number,
     color = "black"
   ): boolean => {
-    x = 0;
-    y = 0;
     let winStack = [1, 1, 1, 1];
     let isWin = false;
     let ways = [
@@ -74,13 +72,13 @@ class Omok {
     ];
     for (let i = 0; i < ways.length; i++) {
       for (let l = -1; l < 2; l += 2) {
-        let start = [x, y],
+        let sx = x, sy = y,
           vecX = ways[i][0] * l,
           vecY = ways[i][1] * l;
-        while (this.getColor(start[0] + vecX, start[1] + vecX) === color) {
+        while (this.getColor(sx + vecX, sy + vecY) === color) {
           winStack[i]++;
-          start[0] += vecX;
-          start[1] += vecY;
+          sx += vecX;
+          sy += vecY;
         }
       }
     }
