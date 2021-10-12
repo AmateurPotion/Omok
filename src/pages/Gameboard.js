@@ -3,18 +3,16 @@ import { useHistory } from "react-router-dom";
 import { Button, Checkbox } from '@mui/material';
 import CategoryIcon from '@mui/icons-material/Category';
 import { Omok } from "../game";
-import LioWebRTC from 'liowebrtc';
+//import LioWebRTC from 'liowebrtc';
 import './Gameboard.scss';
 
 //const publish = false; (publish ? "./" : "") + 
 
 const Gameboard = () => {
+    console.log("update");
     const history = useHistory();
 
     const [state, changeState] = useState(JSON.parse(sessionStorage.getItem("game")));
-    const [lio, rtcConfigure] = useState({
-        
-    });
 
     useEffect(() => {
         // mount
@@ -29,13 +27,16 @@ const Gameboard = () => {
                     state: "progress",
                     gameCondition: "게임 시작 대기중",
                     gridView: true,
+                    timerView: true,
                     color: state.joinMode === "create" ? "black" : 
                             state.joinMode === "join" ? "white" : " transparent",
                     status: new Omok(state.boardWidth, state.boardHeight)
                 };
                 toState.status.winEvents.push(`console.log("win!")`);
                 
-
+                if(!state.hasOwnProperty("timer")) {
+                    toState.timerView = false;
+                }
 
                 changeState(toState);
                 if(localStorage.getItem("cellSize") == null) {
@@ -72,11 +73,11 @@ const Gameboard = () => {
     };
     
     // webrtc(module - liowebrtc) events
-    
+    /*
     const joinHandler = (e) => {
         
     };
-
+    */
     // game
 
     function Board({board, place = (e, x, y) => { alert(x + " / " + y); }}){
@@ -134,11 +135,11 @@ const Gameboard = () => {
         for(;s > 60; s -= 60) {
             m++;
         }
-        return (
+        return state.timerView ? (
             <>
-                {(() => m !== 0 ? (<>{m}분</>) : "")()} {s}초 남음
+                타이머 : {(() => m !== 0 ? (<>{m}분</>) : "")()} {s}초 남음 <br/>
             </>
-        );
+        ) : "";
     }
 
     return state !== null ? (
@@ -148,7 +149,7 @@ const Gameboard = () => {
             <div className="information">
                 <h2 className="title"> 상태창 </h2>
                 게임 진행 상태 : {state.gameCondition} <br/>
-                타이머 : <Timer second={state.hasOwnProperty("timer") ? state.timer : 0} /> <br/>
+                <Timer second={state.hasOwnProperty("timer") ? state.timer : 0} />
                 그리드 on/off <Checkbox defaultChecked={true} onChange={(e) => {changeState({...state, gridView: e.target.checked})}}> a</Checkbox>
                 <Button onClick={e => console.log(e.target.ownerDocument)}>항복</Button> 
                 <SpecList/> <br/>
