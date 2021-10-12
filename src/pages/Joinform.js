@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from "react-router-dom";
 import './Joinform.scss';
 
@@ -19,12 +19,12 @@ const Joinform = () => {
   });
 
   // reference sync
-  const form = React.createRef();
-  const roomName = React.createRef();
-  const timer = React.createRef(), timerable = React.createRef();
-  const password = React.createRef(), passwordable = React.createRef();
-  const boardWidth = React.createRef(), boardHeight = React.createRef();
-  const colorPicker = React.createRef();
+  const form = useRef(),
+        roomName = useRef(),
+        timer = useRef(), timerable = useRef(),
+        password = useRef(), passwordable = useRef(),
+        boardWidth = useRef(), boardHeight = useRef(),
+        colorPicker = useRef();
 
   useEffect(() => {
     // mount
