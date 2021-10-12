@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import './Joinform.scss';
 
+const palette = [
+  "pink", "red", "yellow", "orange", "greenyellow", "green", "skyblue", "blue", "white", "black"
+]
 
 const Joinform = () => {
   const history = useHistory();
@@ -9,7 +12,8 @@ const Joinform = () => {
   const [state, changer] = useState({
     joinMode: "create",
     startText: "방 만들기",
-    disableSizeInput: false,
+    color: palette[0],
+    disableSetting: false,
     disableTimer: true,
     disablePassword: true
   });
@@ -20,6 +24,7 @@ const Joinform = () => {
   const timer = React.createRef(), timerable = React.createRef();
   const password = React.createRef(), passwordable = React.createRef();
   const boardWidth = React.createRef(), boardHeight = React.createRef();
+  const colorPicker = React.createRef();
 
   useEffect(() => {
     // mount
@@ -40,7 +45,8 @@ const Joinform = () => {
       state: "start",
       joinMode: state.joinMode,
       timer: 5,
-      password: ""
+      password: "",
+      color: ""
     };
     
     if(!state.disablePassword) {
@@ -60,27 +66,28 @@ const Joinform = () => {
   }
 
   const changeJoinMode = (e) => {
-    changer({...state, joinMode: e.target.id});
+    let data = {...state, joinMode: e.target.id};
     switch (e.target.id) {
       case "create":
-        changer({...state, disableSizeInput: false, startText: "방 만들기", joinMode: "create"})
-      return;
+        data = {...data, disableSetting: false, startText: "방 만들기"};
+      break;
 
       case "join":
-        changer({...state, disableSizeInput: true, startText: "게임 참여", joinMode: "join"});
-      return;
+        data = {...data, disableSetting: true, startText: "게임 참여"};
+      break;
 
       case "spectate":
-        changer({...state, disableSizeInput: true, startText: "관전하기", joinMode: "spectate"});
-      return;
+        data = {...data, disableSetting: true, startText: "관전하기"};
+      break;
 
       case "replay":
-        changer({...state, disableSizeInput: true, startText: "게임 다시보기", joinMode: "replay"});
-      return;
+        data = {...data, disableSetting: true, startText: "게임 다시보기"};
+      break;
 
       default:
-      return;
+      break;
     }
+    changer(data);
   };
 
 
@@ -92,6 +99,15 @@ const Joinform = () => {
           type="text" placeholder="방 이름" 
           required minLength={3}
         />
+        <br/>
+        <select 
+          className="colorPicker" name="colorPicker" ref={colorPicker} 
+          defaultValue="white" onChange={e => {console.log(e.target.value);colorPicker.current.setAttribute("background", e.target.value)}} 
+        >
+          {palette.map((val, index) => 
+          <option key={index} style={{color:"gray", background: val}}>{val}</option>
+          )}
+        </select>
         <br/>
         <div className="timer inputDiv">
           <input 
@@ -117,17 +133,20 @@ const Joinform = () => {
             required minLength={4}
           />
         </div>
-        <div className="size">
-          <input
-            name="boardWidth" ref={boardWidth} disabled={state.disableSizeInput}
-            type="number" placeholder="가로"
-            required min={15} max={100}
-          />
-          <input
-            name="boardHeight" ref={boardHeight} disabled={state.disableSizeInput}
-            type="number" placeholder="세로"
-            required min={15} max={100}
-          />
+        <div className="roomSetting" style={{display: state.disableSetting ? "none" : ""}}>
+          <div className="size">
+            <input
+              name="boardWidth" ref={boardWidth} disabled={state.disableSetting}
+              type="number" placeholder="가로"
+              required min={15} max={100}
+            />
+            <input
+              name="boardHeight" ref={boardHeight} disabled={state.disableSetting}
+              type="number" placeholder="세로"
+              required min={15} max={100}
+            />
+          </div>
+          
         </div>
         <br/>
         <div className="joinMode">

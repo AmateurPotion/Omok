@@ -4,7 +4,6 @@ div.joinform {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    
     input.full {
         margin: 1%;
         width: 100%;
@@ -23,12 +22,14 @@ div.joinform {
         width: 100%;
     }
 
-    div.size {
-        text-align: center;
-        white-space:nowrap;
-        input {
-            margin: 1%;
-            width: 50%;
+    div.roomSetting {
+        div.size {
+            text-align: center;
+            white-space:nowrap;
+            input {
+                margin: 1%;
+                width: 50%;
+            }
         }
     }
 
